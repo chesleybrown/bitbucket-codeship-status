@@ -6,8 +6,8 @@ module.exports = function () {
 	
 	app.use(bodyParser.json());
 	
-	app.post('/pull-request/:codeshipProjectToken/:codeshipProjectId', function (req, res) {
-		if (!req.body) {
+	app.post('/pull-request/:codeshipProjectGuid/:codeshipProjectId', function (req, res) {
+		if (Object.keys(req.body).length === 0) {
 			res.status(400).end();
 			return;
 		}
