@@ -22,7 +22,8 @@
 	"homepage": "https://github.com/chesleybrown/bitbucket-codeship-status",
 	"dependencies": {
 		"body-parser": "^1.9.2",
-		"express": "^4.10.1"
+		"express": "^4.10.1",
+		"request": "^2.47.0"
 	},
 	"devDependencies": {
 		"mocha": "^2.0.1",

@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var Request = require('request');
 
 module.exports = function () {
 	var app = express();
@@ -19,15 +20,34 @@ module.exports = function () {
 		}
 		var pullRequest = req.body.pullrequest_created;
 		
-		if (!pullRequest.id || !(pullRequest.source && pullRequest.source.branch && pullRequest.source.branch.name)) {
+		if (!pullRequest.id || !pullRequest.description || !(pullRequest.source && pullRequest.source.branch && pullRequest.source.branch.name) || !(pullRequest.source && pullRequest.source.repository && pullRequest.source.repository.full_name)) {
 			res.status(400).end();
 			return;
 		}
 		
-		// update pull request description with codeship status widget
-		// TODO: api call to update pull request
-		
-		res.status(204).end();
+		// if it doesn't already have Codeship status at the start of the description, let's add it
+		if (pullRequest.description.indexOf('[ ![Codeship Status') !== 0) {
+			var widget = '[ ![Codeship Status for ' + pullRequest.source.repository.full_name + '](https://codeship.io/projects/' + req.param('codeshipProjectGuid') +'/status?branch=' + pullRequest.source.branch.name + ')](https://codeship.io/projects/' + req.param('codeshipProjectId') + ')';
+			pullRequest.description = widget + '\r\n\r\n' + pullRequest.description;
+			
+			Request({
+				url: 'https://' + process.env.BITBUCKET_USERNAME + ':' + process.env.BITBUCKET_PASSWORD + '@api.bitbucket.org/2.0/repositories/' + pullRequest.source.repository.full_name + '/pullrequests/' + pullRequest.id,
+				method: 'PUT',
+				json: {
+					description: pullRequest.description
+				}
+			}, function (err, res, body) {
+				if (!err) {
+					res.status(204).end();
+				}
+				else {
+					res.status(500).end();
+				}
+			});
+		}
+		else {
+			res.status(204).end();
+		}
 	});
 	
 	return app;
