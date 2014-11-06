@@ -47,6 +47,20 @@ describe('App Index', function () {
 			});
 		});
 		
+		describe('and pull request data missing required information', function () {
+			beforeEach(function () {
+				response.send({id: 500});
+			});
+			
+			it('should respond with invalid request', function (done) {
+				response.end(function (err, res) {
+					expect(res.status).to.equal(400);
+					expect(res.body).to.be.empty;
+					done();
+				});
+			});
+		});
+		
 		describe('and pull request data is valid', function () {
 			beforeEach(function () {
 				response.send(pullRequestCreated);
