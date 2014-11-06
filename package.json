@@ -1,0 +1,32 @@
+{
+	"name": "bitbucket-codeship-status",
+	"version": "0.0.1",
+	"description": "Small app that will automatically update newly created pull requests in Bitbucket with the branch's Codeship build status.",
+	"main": "app.js",
+	"scripts": {
+		"test": "mocha"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/chesleybrown/bitbucket-codeship-status.git"
+	},
+	"keywords": [
+		"bitbucket",
+		"codeship"
+	],
+	"author": "Chesley",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/chesleybrown/bitbucket-codeship-status/issues"
+	},
+	"homepage": "https://github.com/chesleybrown/bitbucket-codeship-status",
+	"dependencies": {
+		"body-parser": "^1.9.2",
+		"express": "^4.10.1"
+	},
+	"devDependencies": {
+		"mocha": "^2.0.1",
+		"chai": "^1.9.2",
+		"supertest": "^0.14.0"
+	}
+}
