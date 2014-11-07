@@ -1,5 +1,4 @@
-![App Logo](https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/media/logo-small.png)
-bitbucket-codeship-status
+![App Logo](https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/media/logo-small.png) bitbucket-codeship-status
 =========================
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 [![Build Status](https://travis-ci.org/chesleybrown/bitbucket-codeship-status.svg?branch=master)](https://travis-ci.org/chesleybrown/bitbucket-codeship-status)
