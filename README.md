@@ -1,3 +1,4 @@
+![App Logo](https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/media/logo-small.png)
 bitbucket-codeship-status
 =========================
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
