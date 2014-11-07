@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>bitbucket-codeship-status</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="text-center">
+					<p class="visible-xs"><img src="media/logo-small.png" alt="bitbucket-codeship-status logo"></p>
+					<h1><img class="hidden-xs" src="media/logo-small.png" alt="bitbucket-codeship-status logo"> bitbucket-codeship-status</h1>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<% if (BITBUCKET_USERNAME && BITBUCKET_PASSWORD) { %>
+						<div class="alert alert-success" role="alert">App is running and configured correctly!</div>
+					<% } else { %>
+						<div class="alert alert-warning" role="alert">App is running, but missing required configuration!</div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>BITBUCKET_USERNAME</h4>
+				</div>
+				<div class="col-md-6">
+					<% if (BITBUCKET_USERNAME) { %>
+						<span class="label label-success">Success</span>
+					<% } else { %>
+						<span class="label label-danger">Missing</span>
+						<p>You still need to set the <span class="label label-default">BITBUCKET_USERNAME</span> ENV variable.</p>
+					<% } %>
+				</div>
+			</div>
+			
+			<hr>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<h4>BITBUCKET_PASSWORD</h4>
+				</div>
+				<div class="col-md-6">
+					<% if (BITBUCKET_PASSWORD) { %>
+						<span class="label label-success">Success</span>
+					<% } else { %>
+						<span class="label label-danger">Missing</span>
+						<p>You still need to set the <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variable.</p>
+					<% } %>
+				</div>
+			</div>
+			
+			<hr>
+			
+			<div class="row">
+				<div class="col-xs-12">
+					<h3>Setup</h3>
+					<ol>
+						<li>Create an API Key for your team and use your team name as the username and the API Key as your password in the next step</li>
+						<li>Set <span class="label label-default">BITBUCKET_USERNAME</span> and <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variables match with the username and password above</li>
+						<li>
+							Add a Pull Request POST hook for Create / Edit / Merge / Decline that points to your instance of this app. The URL should look something like this:
+							<ul>
+								<li>https://bitbucket-codeship-status-example.herokuapp.com/pull-request/<span class="label label-default">CODESHIP_PROJECT_GUID</span>/<span class="label label-default">CODESHIP_PROJECT_ID</span></li>
+								<li>Which would look something like this: <a href="#">https://bitbucket-codeship-status-example.herokuapp.com/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132</a></li>
+							</ul>
+						</li>
+						<li>Now whenever a pull request is created, it should (almost instantly) get updated to have the Codeship Status widget in the description.</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

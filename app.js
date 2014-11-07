@@ -5,7 +5,16 @@ var Request = require('request');
 module.exports = function () {
 	var app = express();
 	
+	app.use('/media', express.static(__dirname + '/media'));
 	app.use(bodyParser.json());
+	app.set('view engine', 'ejs');
+	
+	app.get('/', function (req, res) {
+		res.render('index', {
+			BITBUCKET_USERNAME: Boolean(process.env.BITBUCKET_USERNAME),
+			BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD)
+		});
+	});
 	
 	app.post('/pull-request/:codeshipProjectGuid/:codeshipProjectId', function (req, res) {
 		if (Object.keys(req.body).length === 0) {
