@@ -28,14 +28,20 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<h4>BITBUCKET_USERNAME</h4>
+					<h4>
+						<% if (BITBUCKET_USERNAME) { %>
+							<span class="label label-success">Success</span>
+						<% } else { %>
+							<span class="label label-danger">Missing</span>
+						<% } %>
+						BITBUCKET_USERNAME
+					</h4>
 				</div>
 				<div class="col-md-6">
 					<% if (BITBUCKET_USERNAME) { %>
-						<span class="label label-success">Success</span>
+						<h4><small>All good!</small></h4>
 					<% } else { %>
-						<span class="label label-danger">Missing</span>
-						<p>You still need to set the <span class="label label-default">BITBUCKET_USERNAME</span> ENV variable.</p>
+						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_USERNAME</span> ENV variable.</small></h4>
 					<% } %>
 				</div>
 			</div>
@@ -44,14 +50,20 @@
 			
 			<div class="row">
 				<div class="col-md-6">
-					<h4>BITBUCKET_PASSWORD</h4>
+					<h4>
+						<% if (BITBUCKET_PASSWORD) { %>
+							<span class="label label-success">Success</span>
+						<% } else { %>
+							<span class="label label-danger">Missing</span>
+						<% } %>
+						BITBUCKET_PASSWORD
+					</h4>
 				</div>
 				<div class="col-md-6">
 					<% if (BITBUCKET_PASSWORD) { %>
-						<span class="label label-success">Success</span>
+						<h4><small>All good!</small></h4>
 					<% } else { %>
-						<span class="label label-danger">Missing</span>
-						<p>You still need to set the <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variable.</p>
+						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variable.</small></h4>
 					<% } %>
 				</div>
 			</div>
