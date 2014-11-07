@@ -4,6 +4,8 @@ bitbucket-codeship-status
 
 Small app that will automatically update newly created pull requests in Bitbucket with the branch's Codeship build status.
 
+![What it looks like](https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/screenshot.png)
+
 # Setup
 
 Just need to install the node modules:
