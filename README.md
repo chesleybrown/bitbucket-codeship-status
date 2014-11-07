@@ -9,9 +9,10 @@ Small app that will automatically update newly created pull requests in Bitbucke
 
 # Running on Heroku
 
-Just need to follow these simple steps:
+First just deploy a free instance of the app on heroku using the button then just follow the steps below. 
 
-1. Click the [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy) button.
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 1. Create an API Key in Bitbucket for your team and use your team name as the `username` and the API Key as your `password` in the next.
 1. Set `BITBUCKET_USERNAME` and `BITBUCKET_PASSWORD` ENV variables to match with the `username` and `password` above.
 1. Add a Pull Request POST hook for `Create / Edit / Merge / Decline` that points to your instance of this app. The URL should look something like this:
