@@ -16,7 +16,7 @@ module.exports = function () {
 		});
 	});
 	
-	app.post('/pull-request/:codeshipProjectGuid/:codeshipProjectId', function (req, res) {
+	app.post('/pull-request/:codeshipProjectUuid/:codeshipProjectId', function (req, res) {
 		if (Object.keys(req.body).length === 0) {
 			res.status(400).end();
 			return;
@@ -36,7 +36,7 @@ module.exports = function () {
 		
 		// if it doesn't already have Codeship status at the start of the description, let's add it
 		if (pullRequest.description.indexOf('[ ![Codeship Status') !== 0) {
-			var widget = '[ ![Codeship Status for ' + pullRequest.source.repository.full_name + '](https://codeship.io/projects/' + req.param('codeshipProjectGuid') +'/status?branch=' + pullRequest.source.branch.name + ')](https://codeship.io/projects/' + req.param('codeshipProjectId') + ')';
+			var widget = '[ ![Codeship Status for ' + pullRequest.source.repository.full_name + '](https://codeship.io/projects/' + req.param('codeshipProjectUuid') +'/status?branch=' + pullRequest.source.branch.name + ')](https://codeship.io/projects/' + req.param('codeshipProjectId') + ')';
 			pullRequest.description = widget + '\r\n\r\n' + pullRequest.description;
 			
 			Request({
