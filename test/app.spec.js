@@ -67,19 +67,19 @@ describe('App Index', function () {
 				});
 			});
 			
-			// describe('and pull request data is valid', function () {
-			// 	beforeEach(function () {
-			// 		response.send(pullRequestCreated);
-			// 	});
+			describe('and pull request data is valid', function () {
+				beforeEach(function () {
+					response.send(pullRequestCreated);
+				});
 				
-			// 	it('should respond with success', function (done) {
-			// 		response.end(function (err, res) {
-			// 			expect(res.status).to.equal(204);
-			// 			expect(res.body).to.be.empty;
-			// 			done();
-			// 		});
-			// 	});
-			// });
+				it('should respond with success', function (done) {
+					response.end(function (err, res) {
+						expect(res.status).to.equal(204);
+						expect(res.body).to.be.empty;
+						done();
+					});
+				});
+			});
 		});
 	});
 })

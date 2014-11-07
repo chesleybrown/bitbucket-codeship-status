@@ -43,7 +43,7 @@ module.exports = function () {
 					return;
 				}
 				
-				if (response.body.error) {
+				if (response.body && response.body.error) {
 					res.status(500).end();
 					return;
 				}
