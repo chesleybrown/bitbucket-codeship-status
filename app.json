@@ -2,5 +2,6 @@
 	"name": "bitbucket-codeship-status",
 	"description": "Small app that will automatically update newly created pull requests in Bitbucket with the branch's Codeship build status.",
 	"repository": "https://github.com/chesleybrown/bitbucket-codeship-status",
+	"logo": "https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/media/logo.png",
 	"keywords": ["node", "express", "bitbucket", "codeship"]
 }
