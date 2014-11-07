@@ -2,6 +2,7 @@
 =========================
 [![Build Status](https://travis-ci.org/chesleybrown/bitbucket-codeship-status.svg?branch=master)](https://travis-ci.org/chesleybrown/bitbucket-codeship-status)
 [![Dependency Status](https://david-dm.org/chesleybrown/bitbucket-codeship-status.svg)](https://david-dm.org/chesleybrown/bitbucket-codeship-status)
+[![devDependency Status](https://david-dm.org/chesleybrown/bitbucket-codeship-status/dev-status.svg)](https://david-dm.org/chesleybrown/bitbucket-codeship-status#info=devDependencies)
 
 Small app that will automatically update newly created pull requests in Bitbucket with the branch's Codeship build status.
 
