@@ -36,7 +36,7 @@ module.exports = function () {
 				json: {
 					description: pullRequest.description
 				}
-			}, function (err, res, body) {
+			}, function (err) {
 				if (!err) {
 					res.status(204).end();
 				}
