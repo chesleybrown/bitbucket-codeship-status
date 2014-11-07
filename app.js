@@ -29,15 +29,17 @@ module.exports = function () {
 		if (pullRequest.description.indexOf('[ ![Codeship Status') !== 0) {
 			var widget = '[ ![Codeship Status for ' + pullRequest.source.repository.full_name + '](https://codeship.io/projects/' + req.param('codeshipProjectGuid') +'/status?branch=' + pullRequest.source.branch.name + ')](https://codeship.io/projects/' + req.param('codeshipProjectId') + ')';
 			pullRequest.description = widget + '\r\n\r\n' + pullRequest.description;
-			
+			console.log(pullRequest);
 			Request({
 				url: 'https://' + process.env.BITBUCKET_USERNAME + ':' + process.env.BITBUCKET_PASSWORD + '@api.bitbucket.org/2.0/repositories/' + pullRequest.source.repository.full_name + '/pullrequests/' + pullRequest.id,
 				method: 'PUT',
 				json: {
 					description: pullRequest.description
 				}
-			}, function (err) {
+			}, function (err, response, body) {
 				if (!err) {
+					console.log(response, 'response');
+					console.log(body, 'body');
 					res.status(204).end();
 				}
 				else {
