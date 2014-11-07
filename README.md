@@ -7,28 +7,26 @@ Small app that will automatically update newly created pull requests in Bitbucke
 
 ![What it looks like](https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/media/screenshot.png)
 
-# Setup
+# Running on Heroku
 
-Just need to install the node modules:
+Just need to follow these simple steps:
 
-1. Create an API Key for your team and use your team name as the `username` and the API Key as your `password` in the next step
-1. Click the `Deploy to Heroku` button above
-1. Set `BITBUCKET_USERNAME` and `BITBUCKET_PASSWORD` ENV variables match with the `username` and `password` above
+1. Create an API Key for your team and use your team name as the `username` and the API Key as your `password` in the next step.
+1. Click the `Deploy to Heroku` button above.
+1. Set `BITBUCKET_USERNAME` and `BITBUCKET_PASSWORD` ENV variables match with the `username` and `password` above.
 1. Add a Pull Request POST hook for `Create / Edit / Merge / Decline` that points to your instance of this app. The URL should look something like this:
 	- `https://bitbucket-codeship-status-example.herokuapp.com/pull-request/<CODESHIP_PROJECT_UUID>/<CODESHIP_PROJECT_ID>`
 	- Which would look something like this: `https://bitbucket-codeship-status-example.herokuapp.com/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132`
 1. Now whenever a pull request is created, it should (almost instantly) get updated to have the Codeship Status widget in the description.
 
-# Running
+# Running Locally
 
 Server runs on port `8000` by default, but will use the port set
 on the environment variable `PORT` if set.
-To start the server, just run:
 
-```
-npm install
-npm start
-```
+1. Run `npm install` for the initial setup.
+1. Set `BITBUCKET_USERNAME` and `BITBUCKET_PASSWORD` ENV variables.
+1. Run `npm start` to start the server.
 
 # Tests
 
