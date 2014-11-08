@@ -12,7 +12,8 @@ module.exports = function () {
 	app.get('/', function (req, res) {
 		res.render('index', {
 			BITBUCKET_USERNAME: Boolean(process.env.BITBUCKET_USERNAME),
-			BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD)
+			BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD),
+			host: req.protocol + '://' + req.get('host')
 		});
 	});
 	

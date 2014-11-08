@@ -5,6 +5,7 @@
 		<title>bitbucket-codeship-status</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	</head>
 	<body>
@@ -27,6 +28,7 @@
 					<% } %>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-md-6">
 					<h4>
@@ -81,16 +83,18 @@
 				<div class="col-xs-12">
 					<h3>Setup</h3>
 					<ol>
-						<li>Create an API Key in Bitbucket for your team and use your team name as the username and the API Key as your password in the next step.</li>
-						<li>Set <span class="label label-default">BITBUCKET_USERNAME</span> and <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variables to match with the username and password above.</li>
+						<% if (!BITBUCKET_USERNAME || !BITBUCKET_PASSWORD) { %>
+							<li>Create an API Key in Bitbucket for your team and use your team name as the username and the API Key as your password in the next step.</li>
+							<li>Set <span class="label label-default">BITBUCKET_USERNAME</span> and <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variables to match with the username and password above.</li>
+						<% } %>
 						<li>
-							Add a Pull Request POST hook for Create / Edit / Merge / Decline that points to your instance of this app. The URL should look something like this:
+							Add a <strong>Pull Request POST</strong> hook in Bitbucket for <strong>Create / Edit / Merge / Decline</strong> that points to:<br>
+							<strong><%= host %>/pull-request/<span class="label label-default">CODESHIP_PROJECT_UUID</span>/<span class="label label-default">CODESHIP_PROJECT_ID</span></strong>
 							<ul>
-								<li>https://bitbucket-codeship-status-example.herokuapp.com/pull-request/<span class="label label-default">CODESHIP_PROJECT_UUID</span>/<span class="label label-default">CODESHIP_PROJECT_ID</span></li>
-								<li>Which would look something like this: <a href="#">https://bitbucket-codeship-status-example.herokuapp.com/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132</a></li>
+								<li>For example: <a href="#"><%= host %>/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132</a></li>
 							</ul>
 						</li>
-						<li>Now whenever a pull request is created, it should (almost instantly) get updated to have the Codeship Status widget in the description.</li>
+						<li>Now whenever a pull request is created, it should (almost instantly) get updated to have the <a href="https://www.codeship.io/documentation/faq/codeship-badge/">Codeship Status Badge</a> in the description.</li>
 					</ol>
 				</div>
 			</div>
@@ -100,6 +104,7 @@
 			<div class="row">
 				<div class="col-xs-12 text-center">
 					<p class="text-muted">
+						Powered by <a href="https://github.com/chesleybrown/bitbucket-codeship-status">bitbucket-codeship-status</a><br>
 						Created by <a href="https://twitter.com/Chesley">@Chesley</a><br>
 						<a href="http://chesleybrown.ca">chesleybrown.ca</a>
 					</p>
