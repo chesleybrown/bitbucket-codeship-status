@@ -13,5 +13,5 @@
 			"description": "Your Bitbucket password or API key.",
 			"value": ""
 		}
-	},
+	}
 }
