@@ -14,7 +14,7 @@ First just deploy a free instance of the app on heroku using the button then jus
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-1. Create an API Key in Bitbucket for your team and use your team name as the `username` and the API Key as your `password` in the next.
+1. Create an API Key in Bitbucket for your team and use your team name as the `username` and the API Key as your `password` in the next step.
 1. Set `BITBUCKET_USERNAME` and `BITBUCKET_PASSWORD` ENV variables to match with the `username` and `password` above.
 1. Add a `Pull Request POST` hook in Bitbucket for `Create / Edit / Merge / Decline` that points to your instance of this app. The URL should look something like this:
 	- `https://bitbucket-codeship-status-example.herokuapp.com/pull-request/<CODESHIP_PROJECT_UUID>/<CODESHIP_PROJECT_ID>`
