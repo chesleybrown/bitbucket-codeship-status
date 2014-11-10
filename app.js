@@ -37,7 +37,7 @@ module.exports = function () {
 		}
 		var pullRequest = req.body.pullrequest_created;
 		
-		if (!pullRequest.id || !pullRequest.description || !(pullRequest.source && pullRequest.source.branch && pullRequest.source.branch.name) || !(pullRequest.source && pullRequest.source.repository && pullRequest.source.repository.full_name)) {
+		if (!pullRequest.id || typeof(pullRequest.description) !== 'string' || !(pullRequest.source && pullRequest.source.branch && pullRequest.source.branch.name) || !(pullRequest.source && pullRequest.source.repository && pullRequest.source.repository.full_name)) {
 			res.status(400).end();
 			return;
 		}

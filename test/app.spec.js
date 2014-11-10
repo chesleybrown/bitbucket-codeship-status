@@ -1,14 +1,14 @@
 var expect = require('chai').expect;
 var request = require('supertest');
-var pullRequestCreated = require('./pull-request-created');
 
 describe('App Index', function () {
-	var server, app, response;
+	var server, app, response, pullRequestCreated;
 	
 	beforeEach(function () {
 		server = undefined;
 		app = undefined;
 		response = undefined;
+		pullRequestCreated = require('./pull-request-created');
 	});
 	beforeEach(function () {
 		app = require('../app')();
@@ -61,6 +61,21 @@ describe('App Index', function () {
 				it('should respond with invalid request', function (done) {
 					response.end(function (err, res) {
 						expect(res.status).to.equal(400);
+						expect(res.body).to.be.empty;
+						done();
+					});
+				});
+			});
+			
+			describe('and pull request data is valid, but description is empty', function () {
+				beforeEach(function () {
+					pullRequestCreated.pullrequest_created.description = '';
+					response.send(pullRequestCreated);
+				});
+				
+				it('should respond with success', function (done) {
+					response.end(function (err, res) {
+						expect(res.status).to.equal(204);
 						expect(res.body).to.be.empty;
 						done();
 					});
