@@ -8,6 +8,7 @@ module.exports = function () {
 	app.use('/media', express.static(__dirname + '/media'));
 	app.use(bodyParser.json());
 	app.set('view engine', 'ejs');
+	app.enable('trust proxy');
 	
 	app.get('/', function (req, res) {
 		Request({
