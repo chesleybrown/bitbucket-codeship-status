@@ -1,6 +1,6 @@
 {
 	"name": "bitbucket-codeship-status",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "Small app that will automatically update newly created pull requests in Bitbucket with the branch's Codeship build status.",
 	"main": "app.js",
 	"scripts": {
