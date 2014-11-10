@@ -10,10 +10,16 @@ module.exports = function () {
 	app.set('view engine', 'ejs');
 	
 	app.get('/', function (req, res) {
-		res.render('index', {
-			BITBUCKET_USERNAME: Boolean(process.env.BITBUCKET_USERNAME),
-			BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD),
-			host: req.protocol + '://' + req.get('host')
+		Request({
+			url: 'https://' + process.env.BITBUCKET_USERNAME + ':' + process.env.BITBUCKET_PASSWORD + '@api.bitbucket.org/2.0/users/chesleybrown',
+			method: 'GET'
+		}, function (err, response, body) {
+			res.render('index', {
+				BITBUCKET_USERNAME: Boolean(process.env.BITBUCKET_USERNAME),
+				BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD),
+				host: req.protocol + '://' + req.get('host'),
+				authenticated: (err || response.statusCode !== 200) ? false : true
+			});
 		});
 	});
 	

@@ -22,7 +22,11 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<% if (BITBUCKET_USERNAME && BITBUCKET_PASSWORD) { %>
-						<div class="alert alert-success" role="alert">App is running and Bitbucket credentials are set!</div>
+						<% if (authenticated) { %>
+							<div class="alert alert-success" role="alert">App is running and has access to Bitbucket!</div>
+						<% } else { %>
+							<div class="alert alert-danger" role="alert">Access to Bitbucket was denied. Are you sure the credentials are correct?</div>
+						<% } %>
 					<% } else { %>
 						<div class="alert alert-warning" role="alert">App is running, but missing required configuration!</div>
 					<% } %>
@@ -45,7 +49,7 @@
 				</div>
 				<div class="col-md-6">
 					<% if (BITBUCKET_USERNAME) { %>
-						<h4><small>All good!</small></h4>
+						<h4><small>ENV variable is set!</small></h4>
 					<% } else { %>
 						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_USERNAME</span> ENV variable.</small></h4>
 					<% } %>
@@ -70,7 +74,7 @@
 				</div>
 				<div class="col-md-6">
 					<% if (BITBUCKET_PASSWORD) { %>
-						<h4><small>All good!</small></h4>
+						<h4><small>ENV variable is set!</small></h4>
 					<% } else { %>
 						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variable.</small></h4>
 					<% } %>
