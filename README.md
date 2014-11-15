@@ -17,7 +17,7 @@ First just deploy a free instance of the app on heroku using the button then jus
 1. Create an API Key in Bitbucket for your team and use your team name as the `username` and the API Key as your `password` in the next step.
 1. Set `BITBUCKET_USERNAME` and `BITBUCKET_PASSWORD` ENV variables to match with the `username` and `password` above.
 1. Add a `Pull Request POST` hook in Bitbucket for `Create / Edit / Merge / Decline` that points to your instance of this app. The URL should look something like this:
-	- `https://bitbucket-codeship-status-example.herokuapp.com/pull-request/<CODESHIP_PROJECT_UUID>/<CODESHIP_PROJECT_ID>`
+	- `https://<YOUR_APP_NAME_ON_HEROKU>.herokuapp.com/pull-request/<CODESHIP_PROJECT_UUID>/<CODESHIP_PROJECT_ID>`
 	- Which would look something like this: `https://bitbucket-codeship-status-example.herokuapp.com/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132`
 1. Now whenever a pull request is created, it should (almost instantly) get updated to have the [Codeship Status Badge](https://www.codeship.io/documentation/faq/codeship-badge/) in the description.
 
