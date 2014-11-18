@@ -6,6 +6,9 @@
 	"scripts": {
 		"test": "mocha"
 	},
+	"engines": {
+		"node": "0.10.33"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/chesleybrown/bitbucket-codeship-status.git"
