@@ -50,10 +50,7 @@ module.exports = function () {
 			Request({
 				url: 'https://' + process.env.BITBUCKET_USERNAME + ':' + process.env.BITBUCKET_PASSWORD + '@api.bitbucket.org/2.0/repositories/' + pullRequest.source.repository.full_name + '/pullrequests/' + pullRequest.id,
 				method: 'PUT',
-				json: {
-					title: pullRequest.title,
-					description: pullRequest.description
-				}
+				json: pullRequest
 			}, function (err, response, body) {
 				if (err) {
 					res.status(500).end();
