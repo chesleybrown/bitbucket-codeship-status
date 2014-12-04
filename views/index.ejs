@@ -5,6 +5,7 @@
 		<title>bitbucket-codeship-status</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	</head>
 	<body>
@@ -35,6 +36,31 @@
 			<div class="row">
 				<div class="col-md-6">
 					<h4>
+						<% if (ssl) { %>
+							<span class="label label-success">Success</span>
+						<% } else { %>
+							<span class="label label-danger">Missing</span>
+						<% } %>
+						<div class="visible-xs">
+							<br>
+						</div>
+						Using SSL
+					</h4>
+				</div>
+				<div class="col-md-6">
+					<% if (ssl) { %>
+						<h4><small>Good, you need SSL to make sure the credentials in your post-hook URL remains secure!</small></h4>
+					<% } else { %>
+						<h4><small>You really should use <span class="label label-default">SSL (https)</span> or the credentials in your post-hook URL will NOT be secure. Click <a href="https://<%= host %>">here to reload over SSL</a>.</small></h4>
+					<% } %>
+				</div>
+			</div>
+			
+			<hr>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<h4>
 						<% if (BITBUCKET_USERNAME) { %>
 							<span class="label label-success">Success</span>
 						<% } else { %>
@@ -48,7 +74,7 @@
 				</div>
 				<div class="col-md-6">
 					<% if (BITBUCKET_USERNAME) { %>
-						<h4><small>ENV variable is set!</small></h4>
+						<h4><small>Set to <span class="label label-default"><%= BITBUCKET_USERNAME %></span>.</small></h4>
 					<% } else { %>
 						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_USERNAME</span> ENV variable.</small></h4>
 					<% } %>
@@ -73,7 +99,7 @@
 				</div>
 				<div class="col-md-6">
 					<% if (BITBUCKET_PASSWORD) { %>
-						<h4><small>ENV variable is set!</small></h4>
+						<h4><small>ENV variable is set, but it's a secret!</small></h4>
 					<% } else { %>
 						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variable.</small></h4>
 					<% } %>
@@ -87,17 +113,24 @@
 					<h3>Setup</h3>
 					<ol>
 						<% if (!BITBUCKET_USERNAME || !BITBUCKET_PASSWORD) { %>
-							<li>Create an API Key in Bitbucket for your team and use your team name as the username and the API Key as your password in the next step.</li>
-							<li>Set <span class="label label-default">BITBUCKET_USERNAME</span> and <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variables to match with the username and password above.</li>
+							<li>
+								<p>Create an API Key in Bitbucket for your team and use your team name as the <strong>username</strong> and the API Key as your <strong>password</strong> in the next step.</p>
+							</li>
+							<li>
+								<p>Set <span class="label label-default">BITBUCKET_USERNAME</span> and <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variables to match with the <strong>username</strong> and <strong>password</strong> above.</p>
+							</li>
 						<% } %>
 						<li>
-							Add a <strong>Pull Request POST</strong> hook in Bitbucket for <strong>Create / Edit / Merge / Decline</strong> that points to:<br>
-							<strong><%= host %>/pull-request/<span class="label label-default">CODESHIP_PROJECT_UUID</span>/<span class="label label-default">CODESHIP_PROJECT_ID</span></strong>
-							<ul>
-								<li>For example: <a href="#"><%= host %>/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132</a></li>
-							</ul>
+							<p>Add a <strong>Pull Request POST</strong> hook in Bitbucket for <strong>Create / Edit / Merge / Decline</strong> that points to:</p>
+							<% if (ssl) { %>
+								<div class="alert alert-info" role="alert">https://<% if (BITBUCKET_USERNAME) { %><%= BITBUCKET_USERNAME %><% } else { %><span class="label label-default">BITBUCKET_USERNAME</span><% } %>:<span class="label label-default">BITBUCKET_PASSWORD</span>@<%= host %>/pull-request/<span class="label label-default">CODESHIP_PROJECT_UUID</span>/<span class="label label-default">CODESHIP_PROJECT_ID</span></div>
+							<% } else { %>
+								<div class="alert alert-danger" role="alert">Sorry, please try using SSL to see the post-hook URL. Click <a href="https://<%= host %>">here to reload over SSL</a>.</div>
+							<% } %>
 						</li>
-						<li>Now whenever a pull request is created, it should (almost instantly) get updated to have the <a href="https://www.codeship.io/documentation/faq/codeship-badge/">Codeship Status Badge</a> in the description.</li>
+						<li>
+							<p>Now whenever a pull request is created, it should (almost instantly) get updated to have the <a href="https://www.codeship.io/documentation/faq/codeship-badge/">Codeship Status Badge</a> in the description.</p>
+						</li>
 					</ol>
 				</div>
 			</div>
