@@ -1,8 +1,8 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var Request = require('request');
-
 module.exports = function () {
+	var express = require('express');
+	var bodyParser = require('body-parser');
+	var Request = require('request');
+	var basicAuth = require('basic-auth-connect');
 	var app = express();
 	
 	app.use('/media', express.static(__dirname + '/media'));
@@ -16,15 +16,18 @@ module.exports = function () {
 			method: 'GET'
 		}, function (err, response, body) {
 			res.render('index', {
-				BITBUCKET_USERNAME: Boolean(process.env.BITBUCKET_USERNAME),
+				BITBUCKET_USERNAME: process.env.BITBUCKET_USERNAME,
 				BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD),
-				host: req.protocol + '://' + req.get('host'),
+				ssl: (req.protocol === 'https') ? true : false,
+				host: req.get('host'),
 				authenticated: (err || response.statusCode !== 200) ? false : true
 			});
 		});
 	});
 	
-	app.post('/pull-request/:codeshipProjectUuid/:codeshipProjectId', function (req, res) {
+	app.post('/pull-request/:codeshipProjectUuid/:codeshipProjectId', basicAuth(function (username, password) {
+		return (username === process.env.BITBUCKET_USERNAME && password === process.env.BITBUCKET_PASSWORD);
+	}), function (req, res) {
 		if (Object.keys(req.body).length === 0) {
 			res.status(400).end();
 			return;
