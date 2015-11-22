@@ -1,9 +1,23 @@
-var expect = require('chai').expect;
-var request = require('supertest');
+'use strict';
+
+var chai = require('chai');
+var sinon  = require('sinon');
+var sinonChai = require('sinon-chai');
+chai.use(sinonChai);
+var expect = chai.expect;
+var testRequest = require('supertest');
 var mockery = require('mockery');
+var log4js = require('log4js');
+var errorSpy = sinon.spy();
+var infoSpy = sinon.spy();
+var getLoggerStub = sinon.stub(log4js, 'getLogger');
+getLoggerStub.returns({
+	error: errorSpy,
+	info: infoSpy
+});
 
 describe('Pull Request', function () {
-	var app, response, Request;
+	var app, response, request;
 	
 	before(function () {
 		mockery.enable({
@@ -11,7 +25,7 @@ describe('Pull Request', function () {
 			warnOnUnregistered: false
 		});
 		mockery.registerMock('request', function (opt, callback) {
-			return Request(opt, callback);
+			return request(opt, callback);
 		});
 		
 		app = require('../app')();
@@ -26,7 +40,7 @@ describe('Pull Request', function () {
 		describe('and WRONG correct credentials', function () {
 			describe('and pull request data is valid, but description is empty', function () {
 				before(function (done) {
-					request(app)
+					testRequest(app)
 						.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
 						.auth('wrong_username', 'wrong_password')
 						.send(require('./pull-request-created'))
@@ -48,7 +62,7 @@ describe('Pull Request', function () {
 			describe('when pull request data posted to valid url', function () {
 				describe('and no pull request data', function () {
 					before(function (done) {
-						request(app)
+						testRequest(app)
 							.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
 							.auth('username', 'password')
 							.end(function (err, res) {
@@ -58,6 +72,10 @@ describe('Pull Request', function () {
 						;
 					});
 					
+					it('should log invalid request error', function () {
+						expect(errorSpy).to.have.been.calledOnce;
+						expect(errorSpy).to.have.been.calledWith('Invalid request: missing "pullrequest"');
+					});
 					it('should respond with invalid request', function () {
 						expect(response.status).to.equal(400);
 						expect(response.body).to.be.empty;
@@ -66,7 +84,7 @@ describe('Pull Request', function () {
 				
 				describe('and pull request data missing required information', function () {
 					before(function (done) {
-						request(app)
+						testRequest(app)
 							.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
 							.auth('username', 'password')
 							.send({id: 500})
@@ -77,6 +95,10 @@ describe('Pull Request', function () {
 						;
 					});
 					
+					it('should log invalid request error', function () {
+						expect(errorSpy).to.have.been.calledOnce;
+						expect(errorSpy).to.have.been.calledWith('Invalid request: missing "pullrequest"');
+					});
 					it('should respond with invalid request', function () {
 						expect(response.status).to.equal(400);
 						expect(response.body).to.be.empty;
@@ -85,13 +107,13 @@ describe('Pull Request', function () {
 				
 				describe('and pull request data is valid, but description is empty', function () {
 					before(function (done) {
-						Request = function (opt, callback) {
+						request = function (opt, callback) {
 							callback(null, {statusCode: 201});
 						};
 						
 						var pullRequestCreated = require('./pull-request-created');
 						pullRequestCreated.pullrequest.description = '';
-						request(app)
+						testRequest(app)
 							.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
 							.auth('username', 'password')
 							.send(pullRequestCreated)
@@ -102,6 +124,10 @@ describe('Pull Request', function () {
 						;
 					});
 					
+					it('should log success', function () {
+						expect(infoSpy).to.have.been.calledOnce;
+						expect(infoSpy).to.have.been.calledWith('Successfully added codeship status to pull request');
+					});
 					it('should respond with success', function () {
 						expect(response.status).to.equal(204);
 						expect(response.body).to.be.empty;
@@ -110,11 +136,11 @@ describe('Pull Request', function () {
 				
 				describe('and pull request data is valid', function () {
 					before(function (done) {
-						Request = function (opt, callback) {
+						request = function (opt, callback) {
 							callback(null, {statusCode: 201});
 						};
 						
-						request(app)
+						testRequest(app)
 							.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
 							.auth('username', 'password')
 							.send(require('./pull-request-created'))
@@ -125,11 +151,47 @@ describe('Pull Request', function () {
 						;
 					});
 					
+					it('should log success about adding codeship status', function () {
+						expect(infoSpy).to.have.been.calledOnce;
+						expect(infoSpy).to.have.been.calledWith('Successfully added codeship status to pull request');
+					});
 					it('should respond with success', function () {
 						expect(response.status).to.equal(204);
 						expect(response.body).to.be.empty;
 					});
 				});
+				
+				describe('and pull request data already has codeship status', function () {
+					before(function (done) {
+						request = function (opt, callback) {
+							callback(null, {statusCode: 201});
+						};
+						
+						testRequest(app)
+							.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
+							.auth('username', 'password')
+							.send(require('./pull-request-existing'))
+							.end(function (err, res) {
+								response = res;
+								done();
+							})
+						;
+					});
+					
+					it('should log success about already having codeship status', function () {
+						expect(infoSpy).to.have.been.calledOnce;
+						expect(infoSpy).to.have.been.calledWith('Pull request already has codeship status');
+					});
+					it('should respond with success', function () {
+						expect(response.status).to.equal(204);
+						expect(response.body).to.be.empty;
+					});
+				});
+			});
+			
+			afterEach(function () {
+				infoSpy.reset();
+				errorSpy.reset();
 			});
 		});
 		

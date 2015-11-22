@@ -1,9 +1,11 @@
+'use strict';
+
 var expect = require('chai').expect;
-var request = require('supertest');
+var testRequest = require('supertest');
 var mockery = require('mockery');
 
 describe('Index', function () {
-	var app, response, pullRequestCreated, Request;
+	var app, response, pullRequestCreated, request;
 	
 	before(function () {
 		mockery.enable({
@@ -15,7 +17,7 @@ describe('Index', function () {
 		pullRequestCreated = require('./pull-request-created');
 		
 		mockery.registerMock('request', function (opt, callback) {
-			return Request(opt, callback);
+			return request(opt, callback);
 		});
 		
 		app = require('../app')();
@@ -23,7 +25,7 @@ describe('Index', function () {
 	
 	describe('when calling an unknown url', function () {
 		beforeEach(function () {
-			response = request(app)
+			response = testRequest(app)
 				.get('/invalid/')
 			;
 		});
@@ -45,10 +47,10 @@ describe('Index', function () {
 		
 		describe('and accessing index page', function () {
 			before(function (done) {
-				Request = function (opt, callback) {
+				request = function (opt, callback) {
 					callback(true);
 				};
-				request(app)
+				testRequest(app)
 					.get('/')
 					.end(function (err, res) {
 						response = res;
@@ -79,14 +81,14 @@ describe('Index', function () {
 		
 		describe('and credentials are correct', function () {
 			before(function () {
-				Request = function (opt, callback) {
+				request = function (opt, callback) {
 					callback(null, {statusCode: 200});
 				};
 			});
 			
 			describe('and accessing index page', function () {
 				before(function (done) {
-					request(app)
+					testRequest(app)
 						.get('/')
 						.end(function (err, res) {
 							response = res;
@@ -119,14 +121,14 @@ describe('Index', function () {
 		
 		describe('and credentials are wrong', function () {
 			before(function () {
-				Request = function (opt, callback) {
+				request = function (opt, callback) {
 					callback(true);
 				};
 			});
 			
 			describe('and accessing index page', function () {
 				before(function (done) {
-					request(app)
+					testRequest(app)
 						.get('/')
 						.end(function (err, res) {
 							response = res;
@@ -153,4 +155,4 @@ describe('Index', function () {
 			delete process.env.BITBUCKET_PASSWORD;
 		});
 	});
-})
+});

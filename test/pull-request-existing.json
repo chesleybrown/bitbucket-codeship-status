@@ -1,6 +1,6 @@
 {
 	"pullrequest": {
-		"description": "Added description",
+		"description": "[ ![Codeship Status for chesleybrown/codeship-example](https://codeship.io/projects/b3416dba-b738-493b-ba33-6a6bed2948ed/status?branch=example-branch)](https://codeship.io/projects/433413) Description already has codeship status.",
 		"links": {
 			"decline": {
 				"href": "https://api.bitbucket.org/2.0/repositories/evzijst/bitbucket2/pullrequests/24/decline"
