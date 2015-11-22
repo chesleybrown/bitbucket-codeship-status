@@ -34,11 +34,11 @@ module.exports = function () {
 		}
 		
 		// verify we have the information we need
-		if (!req.body.pullrequest_created) {
+		if (!req.body.pullrequest) {
 			res.status(400).end();
 			return;
 		}
-		var pullRequest = req.body.pullrequest_created;
+		var pullRequest = req.body.pullrequest;
 		
 		if (!pullRequest.id || typeof(pullRequest.description) !== 'string' || !(pullRequest.source && pullRequest.source.branch && pullRequest.source.branch.name) || !(pullRequest.source && pullRequest.source.repository && pullRequest.source.repository.full_name)) {
 			res.status(400).end();

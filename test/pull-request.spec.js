@@ -90,7 +90,7 @@ describe('Pull Request', function () {
 						};
 						
 						var pullRequestCreated = require('./pull-request-created');
-						pullRequestCreated.pullrequest_created.description = '';
+						pullRequestCreated.pullrequest.description = '';
 						request(app)
 							.post('/pull-request/ee1399cc-b740-43da-812f-d17901f9efa7/52132')
 							.auth('username', 'password')
