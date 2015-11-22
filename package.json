@@ -29,7 +29,7 @@
   "dependencies": {
     "basic-auth-connect": "1.0.0",
     "body-parser": "^1.9.2",
-    "ejs": "1.0.0",
+    "ejs": "2.3.4",
     "express": "^4.10.1",
     "log4js": "^0.6.28",
     "request": "^2.47.0"
@@ -40,10 +40,10 @@
     "grunt-tabs4life": "^2.0.2",
     "load-grunt-tasks": "^3.2.0",
     "mocha": "^2.0.1",
-    "chai": "^1.9.2",
-	"sinon": "^1.17.2",
-	"sinon-chai": "^2.8.0",
-    "supertest": "^0.15.0",
+    "chai": "^3.4.1",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0",
+    "supertest": "^1.1.0",
     "mockery": "^1.4.0"
   }
 }
