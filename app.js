@@ -48,7 +48,7 @@ module.exports = function () {
 		
 		// if it doesn't already have Codeship status at the start of the description, let's add it
 		if (pullRequest.description.indexOf('[ ![Codeship Status') !== 0) {
-			var widget = '[ ![Codeship Status for ' + pullRequest.source.repository.full_name + '](https://codeship.io/projects/' + req.params.codeshipProjectUuid + '/status?branch=' + pullRequest.source.branch.name + ')](https://codeship.io/projects/' + req.params.codeshipProjectId + ')';
+			var widget = '[ ![Codeship Status for ' + pullRequest.source.repository.full_name + '](https://codeship.com/projects/' + req.params.codeshipProjectUuid + '/status?branch=' + pullRequest.source.branch.name + ')](https://codeship.com/projects/' + req.params.codeshipProjectId + ')';
 			pullRequest.description = widget + '\r\n\r\n' + pullRequest.description;
 			
 			request({
