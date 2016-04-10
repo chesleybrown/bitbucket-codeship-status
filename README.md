@@ -4,6 +4,10 @@
 [![Dependency Status](https://david-dm.org/chesleybrown/bitbucket-codeship-status.svg)](https://david-dm.org/chesleybrown/bitbucket-codeship-status)
 [![devDependency Status](https://david-dm.org/chesleybrown/bitbucket-codeship-status/dev-status.svg)](https://david-dm.org/chesleybrown/bitbucket-codeship-status#info=devDependencies)
 
+---
+Now that bitbucket has [added native support for build statues](https://blog.bitbucket.org/2015/11/18/introducing-the-build-status-api-for-bitbucket-cloud/), you may want to consider using [codeship-bitbucket-buildstatus](https://github.com/apphaus/codeship-bitbucket-buildstatus) written by [App Haus](https://github.com/apphaus). This solution is similar to mine, but it utilizes the bitbucket build status API for a better integration.
+---
+
 Small app that will automatically update newly created pull requests in Bitbucket with the branch's Codeship build status.
 
 ![What it looks like](https://raw.githubusercontent.com/chesleybrown/bitbucket-codeship-status/master/media/screenshot.png)
